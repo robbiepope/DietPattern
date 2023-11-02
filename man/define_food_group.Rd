@@ -2,7 +2,7 @@
 % Please edit documentation in R/define_food_group.R
 \name{define_food_group}
 \alias{define_food_group}
-\title{Group the DataFrame by ID and calculate the sum of meal_portion for 
+\title{Group the DataFrame by ID and calculate the sum of meal_portion for
 specified meal_ID codes. Any FFQ IDs with no meal_id data are added as 0g.}
 \usage{
 define_food_group(df, id_list, food_group_name)
@@ -18,7 +18,7 @@ define_food_group(df, id_list, food_group_name)
 summarized df for food group
 }
 \description{
-Group the DataFrame by ID and calculate the sum of meal_portion for 
+Group the DataFrame by ID and calculate the sum of meal_portion for
 specified meal_ID codes. Any FFQ IDs with no meal_id data are added as 0g.
 }
 \author{

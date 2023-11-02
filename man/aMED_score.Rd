@@ -2,7 +2,7 @@
 % Please edit documentation in R/aMED_score.R
 \name{aMED_score}
 \alias{aMED_score}
-\title{Comute the aMED score based on the foodgroup median intake. 
+\title{Comute the aMED score based on the foodgroup median intake.
 Below median intake is scored 0
 Equal to or above intake is scored 1
 For alcohol the score is based on a range
@@ -20,7 +20,7 @@ aMED_score(row, median_list)
 Score of 1 or 0 based on median foodgroup intake and individual intake
 }
 \description{
-Comute the aMED score based on the foodgroup median intake. 
+Comute the aMED score based on the foodgroup median intake.
 Below median intake is scored 0
 Equal to or above intake is scored 1
 For alcohol the score is based on a range
