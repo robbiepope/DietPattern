@@ -22,16 +22,28 @@ energy.adj.residual <- function(df, energy_col, start_col, end_col)
   df_adj <- df
   # Compute mean energy of df
   mean_energy <- mean(df[, energy_col], na.rm=TRUE) # Ignore NA
+
+  # Check for correct input information
+  if (end_col > ncol(df)) {
+    stop("end_col is out of range for the dataframe columns.")
+  }
+
   # Loop through df columns and adjust
   for (col in start_col:end_col) {
-    col_vect <- as.numeric(df[, col]) # Extract nutrient or food group column
-    col_reg <- lm(col_vect ~ Energy_kcal, data=df) # Linear regression to predict with kcal
-    col_resid <- resid(col_reg) # Extract residual
-    col_pred <- as.numeric(predict(col_reg, data.frame(Energy_kcal=mean_energy))) # Predict using mean kcal
-    col_adj <- col_resid + col_pred # Compute adjusted by summing residual and prediction
-    # Create new column name with "_adj"
-    new_col_name <- paste0(names(df)[col], "_adj")
-    df_adj[[new_col_name]] <- col_adj # Add adjusted column to the new dataframe
+    if (col == energy_col) {
+      # Do not adjust the energy kcal column, keep the same
+      new_col_name <- paste0(names(df)[col], "_adj")
+      df_adj[[new_col_name]] <- col # Add adjusted column to the new dataframe
+    } else {
+      col_vect <- as.numeric(df[, col]) # Extract nutrient or food group column
+      col_reg <- lm(col_vect ~ Energy_kcal, data=df) # Linear regression to predict with kcal
+      col_resid <- resid(col_reg) # Extract residual
+      col_pred <- as.numeric(predict(col_reg, data.frame(Energy_kcal=mean_energy))) # Predict using mean kcal
+      col_adj <- col_resid + col_pred # Compute adjusted by summing residual and prediction
+      # Create new column name with "_adj"
+      new_col_name <- paste0(names(df)[col], "_adj")
+      df_adj[[new_col_name]] <- col_adj # Add adjusted column to the new dataframe
+    }
   }
   # Return final df with adjusted nutrient / food group values
   return(df_adj)
