@@ -33,7 +33,7 @@ energy.adj.residual <- function(df, energy_col, start_col, end_col)
     if (col == energy_col) {
       # Do not adjust the energy kcal column, keep the same
       new_col_name <- paste0(names(df)[col], "_adj")
-      df_adj[[new_col_name]] <- col # Add adjusted column to the new dataframe
+      df_adj[[new_col_name]] <- df[, col] # Add adjusted column to the new dataframe
     } else {
       col_vect <- as.numeric(df[, col]) # Extract nutrient or food group column
       col_reg <- lm(col_vect ~ Energy_kcal, data=df) # Linear regression to predict with kcal
