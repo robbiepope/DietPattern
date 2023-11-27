@@ -18,12 +18,13 @@ aMED_score <- function(row, median_list)
   {
   # Extract relevant information from the input df row
   food_group <- row$FoodGroup
+  favour <- row$FavGroup
   median_value <- median_list[food_group]
   sex <- row$SEX
   portion <- row$total_meal_portion
 
   # Separate alcohol food group due to different scoring appraoch
-  if (food_group == "alcohol") {
+  if (favour == "alcohol") {
     # Segregate scoring based on participant Sex
     if (sex == "F") {
       if (portion > 5 && portion <= 15) {
@@ -31,7 +32,6 @@ aMED_score <- function(row, median_list)
       } else {
         return(0)
       }
-
     } else if (sex == 'M') {
       if (portion > 5 && portion <= 25) {
         return(1)
@@ -39,12 +39,22 @@ aMED_score <- function(row, median_list)
         return(0)
       }
     }
-  # For all other food groups follow same scoring method
-  } else {
+  # For all favorable food groups, score 1 for greater than median
+  } else if (favour == 'favourable') {
     if (portion < median_value) {
       return(0)
     } else {
       return(1)
     }
+  # For all unfavorable food groups, score 1 for less than median
+  } else if (favour == 'unfavourable') {
+    if (portion < median_value) {
+      return(1)
+    } else {
+      return(0)
+    }
+  # If none of the above return NA value
+  } else {
+    return(NA)
   }
 }
